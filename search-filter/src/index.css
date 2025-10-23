@@ -1,0 +1,88 @@
+:root {
+  --bg-color: #0f172a;
+  --card-color: #1e293b;
+  --accent: #6366f1;
+  --text-color: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border-radius: 8px;
+  --transition: 0.25s ease-in-out;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color-scheme: dark;
+}
+
+/* Reset + global layout */
+body {
+  margin: 0;
+  background: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--card-color);
+  padding: 2rem 3rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 400px;
+  transition: var(--transition);
+}
+
+/* Search box */
+.users input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #334155;
+  border-radius: var(--border-radius);
+  background: #0f172a;
+  color: var(--text-color);
+  font-size: 1rem;
+  outline: none;
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+}
+
+.users input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 5px var(--accent);
+}
+
+/* User list */
+.users p {
+  margin: 0.4rem 0;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.6rem 1rem;
+  border-radius: var(--border-radius);
+  width: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.users p:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.users p {
+  animation: fadeIn 0.3s ease forwards;
+}
