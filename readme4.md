@@ -1,7 +1,3 @@
-😎 **3-Day Practical Next.js Mastery Plan** — no videos, no theory dumps, just **coding, testing, and building real projects** by hand.
-
----
-
 # ⚛️ **Next.js 3-Day Master Plan (Hands-On Learning)**
 
 Each day builds directly on what you did before, so by the end, you’ll have **3 working projects** and strong practical knowledge.
