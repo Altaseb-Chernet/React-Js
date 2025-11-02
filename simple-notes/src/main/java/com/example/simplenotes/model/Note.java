@@ -10,7 +10,7 @@ public class Note {
 
     private String title;
 
-    @Column(length = 2000)
+    @Column(length = 200000)
     private String content;
 
     private boolean trashed = false; // <— Soft delete flag
