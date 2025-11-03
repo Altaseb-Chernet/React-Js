@@ -7,65 +7,56 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/notes")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class NoteController {
 
-    private final NoteRepository repo;
+    private final NoteRepository noteRepository;
 
-    public NoteController(NoteRepository repo) {
-        this.repo = repo;
+    public NoteController(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
     }
-
-    // ✅ Get all active notes
     @GetMapping
     public List<Note> getAllNotes() {
-        return repo.findByTrashedFalse();
+        return noteRepository.findAll();
+    }
+    // Get active notes
+    @GetMapping
+    public List<Note> getNotes() {
+        return noteRepository.findByTrashedFalse();
     }
 
-    // ✅ Get all trashed notes
+    // Get trashed notes
     @GetMapping("/trash")
-    public List<Note> getTrashedNotes() {
-        return repo.findByTrashedTrue();
+    public List<Note> getTrash() {
+        return noteRepository.findByTrashedTrue();
     }
 
-    // ✅ Add note
+    // Create note
     @PostMapping
-    public Note addNote(@RequestBody Note note) {
-        note.setId(null);
-        return repo.save(note);
+    public Note createNote(@RequestBody Note note) {
+        return noteRepository.save(note);
     }
 
-    // ✅ Update note
+    // Update note
     @PutMapping("/{id}")
-    public Note updateNote(@PathVariable Long id, @RequestBody Note updatedNote) {
-        return repo.findById(id).map(note -> {
-            note.setTitle(updatedNote.getTitle());
-            note.setContent(updatedNote.getContent());
-            return repo.save(note);
-        }).orElseThrow();
+    public Note updateNote(@PathVariable Long id, @RequestBody Note noteData) {
+        Note note = noteRepository.findById(id).orElseThrow();
+        note.setTitle(noteData.getTitle());
+        note.setContent(noteData.getContent());
+        return noteRepository.save(note);
     }
 
-    // ✅ Move to Trash
+    // Soft delete
     @DeleteMapping("/{id}")
-    public void moveToTrash(@PathVariable Long id) {
-        repo.findById(id).ifPresent(note -> {
-            note.setTrashed(true);
-            repo.save(note);
-        });
+    public Note softDelete(@PathVariable Long id) {
+        Note note = noteRepository.findById(id).orElseThrow();
+        note.setTrashed(true);
+        return noteRepository.save(note);
     }
 
-    // ✅ Restore from Trash
-    @PutMapping("/restore/{id}")
-    public void restoreFromTrash(@PathVariable Long id) {
-        repo.findById(id).ifPresent(note -> {
-            note.setTrashed(false);
-            repo.save(note);
-        });
-    }
-
-    // ✅ Permanently delete
+    // Hard delete
     @DeleteMapping("/trash/{id}")
-    public void deleteForever(@PathVariable Long id) {
-        repo.deleteById(id);
+    public void hardDelete(@PathVariable Long id) {
+        noteRepository.deleteById(id);
     }
 }

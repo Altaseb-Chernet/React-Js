@@ -1,22 +1,26 @@
 package com.example.simplenotes.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Note {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
 
-    @Column(length = 200000)
+    @Column(length = 10000)
     private String content;
 
-    private boolean trashed = false; // <— Soft delete flag
+    private boolean trashed = false;
 
-    public Note() {
-    }
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    // Constructors, Getters, Setters
 
     public Long getId() {
         return id;
@@ -48,5 +52,21 @@ public class Note {
 
     public void setTrashed(boolean trashed) {
         this.trashed = trashed;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
